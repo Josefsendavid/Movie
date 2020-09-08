@@ -1,17 +1,27 @@
 package rest;
 
+import dtos.MovieDTO;
 import entities.Movie;
+import facades.MovieFacade;
 import utils.EMF_Creator;
 import io.restassured.RestAssured;
+import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.post;
+import static io.restassured.RestAssured.when;
 import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.core.UriBuilder;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.util.HttpStatus;
@@ -19,8 +29,11 @@ import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.MatcherAssert.assertThat;
+import org.hamcrest.Matchers;
 import static org.hamcrest.Matchers.*;
 import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +46,8 @@ public class MovieResourceTest {
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
     private static EntityManagerFactory emf;
-    
+    private MovieFacade facade;
+
     private Movie m1;
     private Movie m2;
     private Movie m3;
@@ -50,7 +64,7 @@ public class MovieResourceTest {
 
         //Set System property so the project executed by the Grizly-server wil use this same database
         EMF_Creator.startREST_TestWithDB();
-        
+
         httpServer = startServer();
 
         //Setup RestAssured
@@ -61,10 +75,9 @@ public class MovieResourceTest {
     }
 
     @AfterAll
-    public static void closeTestServer()  {
-       
-       // System.in.read();
-       
+    public static void closeTestServer() {
+
+        // System.in.read();
         httpServer.shutdownNow();
         //Don't forget this, if you called its counterpart in @BeforeAll
         EMF_Creator.endREST_TestWithDB();
@@ -97,6 +110,7 @@ public class MovieResourceTest {
         //Hamcrest matcher
         given().when().get("/movie").then().assertThat().statusCode(200);
     }
+
     @Test
     public void contentType() {
         //Gherkin Syntax
@@ -104,12 +118,12 @@ public class MovieResourceTest {
         //Hamcrest matcher
         given().when().get("/movie").then().assertThat().contentType(ContentType.JSON);
     }
-    
+
     @Test
     public void demonStrateLogging() {
-        
+
         given().log().all().when().get("/movie").then().log().body();
-       
+
     }
 
     @Test
@@ -124,27 +138,37 @@ public class MovieResourceTest {
 
     @Test
     public void testGetAll() {
-        //TODO
+        given()
+                .when().
+                get("/movie/all")
+                .then()
+                .assertThat()
+                .body("size()", is(3))
+                .body("title", hasItems("Harry Potter and the Philosopher's Stone", "Harry Potter and the Chamber of Secrets", "Once Upon a Time... in Hollywood"));
     }
 
-    
     @Test
     public void testFindByTitle() {
-        //TODO
+        given()
+                .get("/movie/title/" + m3.getTitle()).then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("title", equalTo(m3.getTitle()));
     }
-    
+
     @Test
     public void testFindByTitleNotFound() {
-       //TODO, if you have time
+        //TODO, if you have time
     }
-    
-     @Test
+
+    @Test
     public void testFindById() {
         //given().get("/movie/{id}", m2.getId())
-        //TODO
-          
+        given()
+                .get("/movie/" + m2.getId()).then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("id", equalTo(m2.getId()));
+        
     }
 }
-
-
- 

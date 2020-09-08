@@ -72,7 +72,7 @@ public class MovieFacade  {
 
     public MovieDTO getMovieById(int id) {
         EntityManager em = emf.createEntityManager();
-        Movie m=  em.find(Movie.class, id);
+        Movie m =  em.find(Movie.class, id);
         return new MovieDTO(m);
     }
 

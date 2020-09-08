@@ -1,14 +1,21 @@
 package facades;
 
+import dtos.MovieDTO;
 import utils.EMF_Creator;
 import entities.Movie;
+import static entities.ghy636765.Movie_.actors;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.everyItem;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
+import org.hamcrest.Matchers;
 import static org.hamcrest.Matchers.arrayContaining;
+import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -72,22 +79,38 @@ public class MovieFacadeTest {
 
     @Test
     public void testGetAllMovies() {
-        //Tode
+        List<MovieDTO> movies = facade.getAllMovies();
+        assertEquals(3, facade.getMovieCount(), "Expects three movies in the database");
+        assertThat(movies, hasItems( // or contains or containsInAnyOrder 
+                Matchers.<MovieDTO>hasProperty("title", is("Harry Potter and the Philosopher's Stone")),
+                Matchers.<MovieDTO>hasProperty("title", is("Harry Potter and the Chamber of Secrets"))
+        )
+        );
     }
 
     @Test
     public void testGetMovieById() {
-        //Todo
+        List<MovieDTO> movies = facade.getAllMovies();
+        assertThat(movies, hasItems(
+        Matchers.<MovieDTO>hasProperty("id", is(1))
+        )
+        );
     }
 
     @Test
     public void testMovieHasActors() {
         //You could use the method: arrayContaining(....
+        arrayContaining(actors);
     }
 
     @Test
     public void getMoviesByTitle() {
         //Todo
+        List<MovieDTO> movies = facade.getAllMovies();
+        assertThat(movies, hasItems(
+        Matchers.<MovieDTO>hasProperty("title", is("Once Upon a Time... in Hollywood"))
+        )
+        );
     }
 
 }
