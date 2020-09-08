@@ -147,14 +147,14 @@ public class MovieResourceTest {
                 .body("title", hasItems("Harry Potter and the Philosopher's Stone", "Harry Potter and the Chamber of Secrets", "Once Upon a Time... in Hollywood"));
     }
 
-    @Test
-    public void testFindByTitle() {
-        given()
-                .get("/movie/title/" + m3.getTitle()).then()
-                .assertThat()
-                .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("title", equalTo(m3.getTitle()));
-    }
+//    @Test
+//    public void testFindByTitle() {
+//        given()
+//                .get("/movie/title/" + m3.getTitle()).then()
+//                .assertThat()
+//                .statusCode(HttpStatus.OK_200.getStatusCode())
+//                .body("title", equalTo(m3.getTitle()));
+//    }
 
     @Test
     public void testFindByTitleNotFound() {
