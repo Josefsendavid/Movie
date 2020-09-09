@@ -53,12 +53,12 @@ public class MovieFacadeTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
+        m1 = new Movie(2001, "Harry Potter and the Philosopher's Stone", new String[]{"Daniel Radcliffe", "Emma Watson", "Alan Rickman", "Rupert Grint"});
+        m2 = new Movie(2002, "Harry Potter and the Chamber of Secrets", new String[]{"Daniel Radcliffe", "Emma Watson", "Alan Rickman", "Rupert Grint"});
+        m3 = new Movie(2019, "Once Upon a Time... in Hollywood", new String[]{"Leonardo DiCaprio", "Brad Pitt", "Margot Robbie"});
         try {
             em.getTransaction().begin();
             em.createQuery("DELETE from Movie").executeUpdate();
-            m1 = new Movie(2001, "Harry Potter and the Philosopher's Stone", new String[]{"Daniel Radcliffe", "Emma Watson", "Alan Rickman", "Rupert Grint"});
-            m2 = new Movie(2002, "Harry Potter and the Chamber of Secrets", new String[]{"Daniel Radcliffe", "Emma Watson", "Alan Rickman", "Rupert Grint"});
-            m3 = new Movie(2019, "Once Upon a Time... in Hollywood", new String[]{"Leonardo DiCaprio", "Brad Pitt", "Margot Robbie"});
             em.persist(m1);
             em.persist(m2);
             em.persist(m3);
@@ -92,7 +92,7 @@ public class MovieFacadeTest {
     public void testGetMovieById() {
         List<MovieDTO> movies = facade.getAllMovies();
         assertThat(movies, hasItems(
-                Matchers.<MovieDTO>hasProperty("id", is(1))
+        Matchers.<MovieDTO>hasProperty("id", is(m1.getId()))
         )
         );
     }
@@ -108,7 +108,7 @@ public class MovieFacadeTest {
         //Todo
         List<MovieDTO> movies = facade.getAllMovies();
         assertThat(movies, hasItems(
-                Matchers.<MovieDTO>hasProperty("title", is("Once Upon a Time... in Hollywood"))
+        Matchers.<MovieDTO>hasProperty("title", is("Once Upon a Time... in Hollywood"))
         )
         );
     }
