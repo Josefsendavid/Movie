@@ -27,9 +27,9 @@
     <properties>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="eclipselink.canonicalmodel.subpackage" value="ghy636765"/>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/startcode_test"/>
-      <property name="javax.persistence.jdbc.user" value="dev"/>
-      <property name="javax.persistence.jdbc.password" value="ax2"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://68.183.211.25:3306/startcode_test"/>
+      <property name="javax.persistence.jdbc.user" value="david"/>
+      <property name="javax.persistence.jdbc.password" value="kakarot10"/>
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
