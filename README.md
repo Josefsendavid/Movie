@@ -1,5 +1,10 @@
 [![Build Status](https://travis-ci.com/Josefsendavid/Movie.svg?branch=master)](https://travis-ci.com/Josefsendavid/Movie)
 
+Jeg har været i tvivl om hvordan det skulle gøres, så nu linker jeg her min github side med alle projekter samlet:
+https://github.com/Josefsendavid/week3projects
+Og min index side:
+https://www.josefsendavid.dk/movieday2/
+
 *This project is meant as start code for projects and exercises given in Flow-1+2 at http://cphbusiness.dk in the Study Program "AP degree in Computer Science"*
 
 *Projects which are expected to use this start-code are projects that require all, or most of the following technologies:*
