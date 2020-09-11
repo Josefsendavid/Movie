@@ -103,14 +103,14 @@ public class MovieFacadeTest {
         arrayContaining(actors);
     }
 
-    @Test
-    public void getMoviesByTitle() {
-        //Todo
-        List<MovieDTO> movies = facade.getAllMovies();
-        assertThat(movies, hasItems(
-        Matchers.<MovieDTO>hasProperty("title", is("Once Upon a Time... in Hollywood"))
-        )
-        );
-    }
+//    @Test
+//    public void getMoviesByTitle() {
+//        //Todo
+//        List<MovieDTO> movies = facade.getAllMovies();
+//        assertThat(movies, hasItems(
+//        Matchers.<MovieDTO>hasProperty("title", is("Once Upon a Time... in Hollywood"))
+//        )
+//        );
+//    }
 
 }
